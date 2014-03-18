@@ -1,2 +1,8 @@
 Making Interface using Shiny for HGNChelper package.
 For additional usage of package visit: https://bitbucket.org/lwaldron/hgnchelper/
+
+How to Run:
+1. Start R console
+2. library("Shiny")
+3. runApp(<path to the the directory where ui.R and server.R are located>)
+4. Upload the file and get started
