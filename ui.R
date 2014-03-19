@@ -15,10 +15,7 @@ shinyUI(pageWithSidebar(
   mainPanel(
     textOutput('version'),
     tableOutput('contents'),
-    conditionalPanel(
-      condition = "output.contents",
-      verbatimTextOutput('summary.row')
-    )
+    verbatimTextOutput('summary')
     )
   
 ))
