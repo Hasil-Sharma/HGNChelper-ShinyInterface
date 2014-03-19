@@ -7,13 +7,20 @@ shinyServer(function(input, output){
     inFile <- input$file1
     if(!is.null(inFile)){
     data <- read.xls(inFile$datapath,header=FALSE)
-    res <- checkGeneSymbols(as.vector(data$V1))
+    data <- as.vector(data$V1)
+    }else{
+      if(!(input$inputText=="")){ 
+        data <-  unlist(strsplit(input$inputText,split="\n"))
+      }else{
+        return (NULL)
+      }
+    }
+    res <- checkGeneSymbols(data)
     row <- paste("Number of Genes Checked: ",nrow(res))
     approved <- paste("Number of invalid genes found:",sum(res$Approved))
     corrected <- paste("Number of invalid genes corrected: ", 
                        sum(!res$Approved & !is.na(res$Suggested.Symbol)))
     return(list(res=res,summary=c(row,approved,corrected)))
-    }
   }
 
   versionGen <- reactive({
@@ -31,7 +38,7 @@ shinyServer(function(input, output){
   output$downloadData <- downloadHandler(
     filename = function(){ paste('output','.csv',sep='')},
     content = function(file){
-      write.csv(react()[,3],file,quote=FALSE,row.names=FALSE,col.names=FALSE)
+      write.csv(data(),file,quote=FALSE,row.names=FALSE,col.names=FALSE)
     }
   )
 })
