@@ -5,6 +5,7 @@ library(HGNChelper)
 shinyServer(function(input, output){
   react <-function(input=NULL){
     inFile <- input$file1
+
     if(!is.null(inFile)){
     data <- read.xls(inFile$datapath,header=FALSE)
     data <- as.vector(data$V1)
