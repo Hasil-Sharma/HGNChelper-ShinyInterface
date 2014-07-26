@@ -9,10 +9,15 @@ shinyServer(function(input, output){
     if(!is.null(inFile)){
     data <- read.xls(inFile$datapath,header=FALSE)
     data <- as.vector(data$V1)
-    }else{
-      if(!(input$inputText=="")){ 
-        data <-  unlist(strsplit(input$inputText,split="\n"))
-      }else{
+    }
+    else{
+      if(!(input$inputText=="")){
+        data <- input$inputText
+        data <- gsub(' ','',data)
+        data <- unlist(strsplit(data,split=c('\n')))
+        data <- data[data != ""]
+      }
+      else{
         return (NULL)
       }
     }
@@ -37,7 +42,7 @@ shinyServer(function(input, output){
   output$summary <- renderPrint(cat(data()$summary,sep="\n"))
 
   output$downloadData <- downloadHandler(
-    filename = function(){ paste('output','.csv',sep='')},
+    filename = function(){ paste('output',Sys.Date(),'.csv',sep='')},
     content = function(file){
       write.csv(data(),file,quote=FALSE,row.names=FALSE,col.names=FALSE)
     }
