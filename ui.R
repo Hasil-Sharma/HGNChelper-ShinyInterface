@@ -2,7 +2,7 @@ library(shiny)
 
 shinyUI(pageWithSidebar(
   
-  headerPanel("Project-1"),
+  headerPanel("HGNChelper"),
   
   sidebarPanel(
     tags$textarea(id="inputText",rows=5,cols=2,placeholder="Enter Genes"),
